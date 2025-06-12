@@ -1,0 +1,109 @@
+    body {
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 310px;
+      padding: 50px;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeInUp 0.8s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-container img {
+      max-width: 150px;
+      margin-bottom: 20px;
+      animation: slideIn 1s ease-out;
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .form-control {
+      border-radius: 10px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #000000; 
+      box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-danger {
+      background-color: #004d80; 
+      color: rgb(255, 255, 255);
+      border-radius: 10px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-danger:hover {
+      background-color: #004d80; 
+      transform: translateY(-2px);
+    }
+
+    .footer a {
+      color: #050505; 
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+      color: #5871a4; 
+    }
+
+    .modal-content {
+      border-radius: 15px;
+      animation: fadeInModal 0.5s ease-out;
+    }
+
+    @keyframes fadeInModal {
+      0% {
+        transform: translateY(-50%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      background-color: #004d80; 
+      color: rgb(255, 255, 255);
+      border-radius: 15px 15px 0 0;
+    }
+
+    .modal-footer button {
+      background-color: #42a42f; 
+      color: rgb(0, 0, 0);
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-footer button:hover {
+      background-color: #000000; 
+    }

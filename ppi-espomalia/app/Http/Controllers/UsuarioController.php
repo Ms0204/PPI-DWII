@@ -12,7 +12,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = Usuario::paginate();
+        $usuarios = Usuario::all();
             return view("usuarios.index", compact("usuarios"));
     }
 
@@ -21,7 +21,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+    //    
     }
 
     /**
@@ -29,7 +29,20 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $request->validate([
+            'cedula' => "required","numeric","digits:10",
+            'usuario' => "required","string","min:8","max:15",
+            'password' => "required","string","min:8","max:15",
+            'nombres' => "required","string","min:8","max:30",
+            'apellidos' => "required","string","min:10","max:20",
+            'correo' => "required","email" ,"min:15",
+            'direccion' => "required","string","min:8","max:60",
+            'telefono' => "required","numeric","digits:10",
+        ]);
+
+        Usuario::create($request->all());
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
     }
 
     /**
