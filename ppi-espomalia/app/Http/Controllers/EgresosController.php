@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Egresos;
 use Illuminate\Http\Request;
 
 class EgresosController extends Controller
@@ -11,7 +12,8 @@ class EgresosController extends Controller
      */
     public function index()
     {
-        //
+        $egresos = Egresos::paginate();
+            return view("egresos.index", ["egresos"=> $egresos]);
     }
 
     /**

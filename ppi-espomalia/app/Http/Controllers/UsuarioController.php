@@ -12,8 +12,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = Usuario::all();
-            return view("usuarios.index", compact("usuarios"));
+        $usuarios = Usuario::paginate();
+            return view("usuarios.index", ["usuarios"=> $usuarios]);
     }
 
     /**
@@ -21,7 +21,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-    //    
+     return "holi";
     }
 
     /**

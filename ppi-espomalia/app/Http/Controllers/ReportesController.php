@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reportes;
 use Illuminate\Http\Request;
 
 class ReportesController extends Controller
@@ -11,7 +12,8 @@ class ReportesController extends Controller
      */
     public function index()
     {
-        //
+        $reportes = Reportes::paginate();
+            return view("reportes.index", ["reportes"=> $reportes]);
     }
 
     /**

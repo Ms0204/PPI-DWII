@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingresos;
 use Illuminate\Http\Request;
 
 class IngresosController extends Controller
@@ -11,7 +12,8 @@ class IngresosController extends Controller
      */
     public function index()
     {
-        //
+        $ingresos = Ingresos::paginate();
+            return view("ingresos.index", ["usuarios"=> $ingresos]);
     }
 
     /**

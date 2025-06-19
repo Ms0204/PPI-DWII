@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inventarios;
 use Illuminate\Http\Request;
 
 class InventarioController extends Controller
@@ -11,7 +12,8 @@ class InventarioController extends Controller
      */
     public function index()
     {
-        //
+        $inventarios = Inventarios::paginate();
+        return view("inventarios.index", ["inventarios"=> $inventarios]);
     }
 
     /**

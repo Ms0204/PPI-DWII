@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categorias;
+use App\Models\Pagos;
 use Illuminate\Http\Request;
 
-class CategoriasController extends Controller
+class PagosController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categorias = Categorias::paginate();
-            return view("categorias.index", ["categorias"=> $categorias]);
+        $pagos = Pagos::paginate();
+            return view("pagos.index", ["pagos"=> $pagos]);
     }
 
     /**
