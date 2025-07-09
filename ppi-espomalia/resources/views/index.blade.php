@@ -23,7 +23,7 @@
       <h2 class="text-center mb-4">
         Iniciar Sesión
       </h2>
-      <form action="{{ route('login.submit') }}" method="POST" id="loginForm">
+      <form action="{{ route('login.procesar') }}" method="POST" id="loginForm">
           @csrf
         @if (session('error'))
         <div class="alert alert-danger text-center">

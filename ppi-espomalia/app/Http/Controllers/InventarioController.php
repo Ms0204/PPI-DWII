@@ -13,7 +13,7 @@ class InventarioController extends Controller
     public function index()
     {
         $inventarios = Inventarios::paginate();
-        return view("inventarios.index", ["inventarios"=> $inventarios]);
+        return view("inventarios.index", compact("inventarios"));
     }
 
     /**
@@ -29,7 +29,17 @@ class InventarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'codigo' => ['required', 'numeric', 'min:10000000', 'max:999999999999999'],
+            'tipoMovimiento' => ['required', 'string'],
+            'fecha_registro' => ['required', 'date'],
+            'cantidad_productos' => ['required', 'integer', 'min:1'],
+            'cedula_usuario' => ['required', 'digits:10'],
+        ]);
+
+        Inventarios::create($request->all());
+
+        return redirect()->route('inventarios.index')->with('success', 'Inventario agregado correctamente.');
     }
 
     /**
@@ -52,15 +62,28 @@ class InventarioController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
-    }
+        {
+        $request->validate([
+            'codigo' => ['required', 'numeric', 'min:10000000', 'max:999999999999999'],
+            'tipoMovimiento' => ['required', 'string'],
+            'fecha_registro' => ['required', 'date'],
+            'cantidad_productos' => ['required', 'integer', 'min:1'],
+            'cedula_usuario' => ['required', 'numeric', 'digits:10'],
+        ]);
 
+        $inventario = Inventarios::findOrFail($id);
+        $inventario->update($request->all());
+
+        return redirect()->route('inventarios.index')->with('success', 'Inventario actualizado correctamente.');
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $inventario = Inventarios::findOrFail($id);
+        $inventario->delete();
+
+        return redirect()->route('inventarios.index')->with('success', 'Inventario eliminado correctamente.');
     }
 }

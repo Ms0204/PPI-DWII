@@ -14,18 +14,13 @@ use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsuarioController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Ruta para mostrar el formulario de login
-Route::get('/login', function () {
-    return view('login'); // resources/views/login.blade.php
+Route::get('/', function () {
+    return view('index'); // resources/views/login.blade.php
 })->name('login');
 
 // Ruta para procesar el login
-Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login.submit');
+Route::post('/login', [AuthController::class, 'procesarLogin'])->name('login.procesar');
 
 // Ruta para recuperar contraseña del login
 Route::post('/recover-password', [PasswordRecoveryController::class, 'recover'])->name('password.recover');
@@ -36,13 +31,10 @@ Route::get('/home', function () {
 })->name('home');
 
 // Ruta para la vista de Usuarios
-Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
-//Route::get('/nuevousuario', [UsuarioController::class, 'create'])->name('usuarios.create');
-Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
+Route::resource('usuarios', UsuarioController::class);
 
 // Ruta para la vista de Inventarios
-Route::get('/inventarios', [InventarioController::class, 'index'])->name('inventarios.index');
-Route::post('/inventarios', [InventarioController::class, 'store'])->name('inventarios.store');
+Route::resource('inventarios', InventarioController::class);
 
 // Ruta para la vista de Pagos
 Route::get('/pagos', [PagosController::class, 'index'])->name('inventarios.index');

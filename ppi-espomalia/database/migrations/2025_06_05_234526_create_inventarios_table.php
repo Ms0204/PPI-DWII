@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('inventarios', function (Blueprint $table) {
             $table->id();
-            $table->string("codigo");
+            $table->string("codigo")->unique();
             $table->string("tipoMovimiento");
             $table->dateTime("fechaRegistro");
             $table->integer("cantidadProductos");

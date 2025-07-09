@@ -13,7 +13,7 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuarios = Usuario::paginate();
-            return view("usuarios.index", ["usuarios"=> $usuarios]);
+        return view('usuarios.index', compact('usuarios'));
     }
 
     /**
@@ -21,7 +21,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-     return "holi";
+     //
     }
 
     /**
@@ -32,7 +32,7 @@ class UsuarioController extends Controller
             $request->validate([
             'cedula' => "required","numeric","digits:10",
             'usuario' => "required","string","min:8","max:15",
-            'password' => "required","string","min:8","max:15",
+            'contrasenia' => "required","string","min:8","max:15",
             'nombres' => "required","string","min:8","max:30",
             'apellidos' => "required","string","min:10","max:20",
             'correo' => "required","email" ,"min:15",
@@ -66,7 +66,21 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'cedula' => "required","numeric","digits:10",
+            'usuario' => "required","string","min:8","max:15",
+            'contrasenia' => "required","string","min:8","max:15",
+            'nombres' => "required","string","min:8","max:30",
+            'apellidos' => "required","string","min:10","max:20",
+            'correo' => "required","email" ,"min:15",
+            'direccion' => "required","string","min:8","max:60",
+            'telefono' => "required","numeric","digits:10",
+        ]);
+
+        $usuario = Usuario::findOrFail($id);
+        $usuario->update($request->all());
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
     }
 
     /**
@@ -74,6 +88,8 @@ class UsuarioController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $usuario = Usuario::findOrFail($id);
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
     }
 }

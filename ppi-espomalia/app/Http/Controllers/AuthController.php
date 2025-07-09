@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function procesarLogin(Request $request)
     {
         $usuario = $request->input('usuario');
         $contraseña = $request->input('contraseña');

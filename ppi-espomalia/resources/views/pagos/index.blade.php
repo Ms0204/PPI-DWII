@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gestión de Pagos</title>
-  <!-- Fuente Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-  <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-  <!-- Fuente css -->
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    <!-- Fuente Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <!-- Estilos CSS -->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
 </head>
 <body>
     <!-- Botón para abrir la barra lateral en móviles -->
     <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
-    <!-- Barra lateral con menú de navegación -->
-  <div class="sidebar">
-    <div class="logo">
-            <img src="{{ asset('Static/Img/marine_16484329.png') }}" alt="Logo del Sistema">
-    </div>
-    <ul>
+
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="{{ asset('Static/Img/marine_16484329.png') }}" alt="Logo del Sistema" />
+        </div>
+        <ul>
             <li><a href="{{ url('usuarios') }}">Gestión de Usuarios</a></li>
             <li><a href="{{ url('inventarios') }}">Gestión de Inventarios</a></li>
             <li><a href="{{ url('pagos') }}">Gestión de Pagos</a></li>
@@ -33,160 +34,188 @@
             <li><a href="{{ url('categorias') }}">Gestión de Categorías</a></li>
             <li><a href="{{ url('roles') }}">Gestión de Roles</a></li>
             <li><a href="{{ url('permisos') }}">Gestión de Permisos</a></li>
-            <li><a href="{{ route('login') }}" class="btn-rojo" onclick="return confirmarCerrarSesion()">
+            <li>
+                <a href="{{ route('login') }}" class="btn-rojo" onclick="return confirmarCerrarSesion()">
                     <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-      </a></li>
-    </ul>
-  </div>
-  <div class="main-content">
-  <!-- Cabecera -->
-  <header>
-    <h1>Gestión de Pagos</h1>
-        <a href="{{route('home')}}" class="btn btn-primary d-flex align-items-center">
-      <i class="fas fa-home me-2"></i> Inicio </a>
-  </header>
-    <!-- Contenido Principal -->
-  <main class="container">
-    <!-- Barra de búsqueda y agregar pago -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <input type="text" id="search" class="form-control" placeholder="Buscar Pagos" aria-label="Buscar Pagos">
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
-        <i class="fas fa-user-plus"></i> Agregar Pago
-      </button>
-    </div>  
-    <!-- Tabla de pagos -->
-    <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Id</th>
-            <th>Número Pago</th>
-            <th>Método Pago</th>
-            <th>Cantidad</th>
-            <th>Fecha Pago</th>
-            <th>Cédula Usuario</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="userTableBody">
-          <!-- Filas generadas dinámicamente -->
-        </tbody>
-      </table>
-          <!-- Paginación -->
-        <div class="d-flex justify-content-between align-items-center">
-        <select id="itemsPerPage" class="form-select w-auto">
-          <option value="5"selected>5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-        </select>
-        <nav>
-          <ul class="pagination" id="pagination">
-          <!-- Paginación generada dinámicamente -->
-          </ul>
-        </nav>
-      </div>
-    </main>
-        <!-- Modal Agregar Pago -->
-        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Gestión de Pagos</h1>
+            <a href="{{ route('home') }}" class="btn btn-primary d-flex align-items-center">
+                <i class="fas fa-home me-2"></i> Inicio
+            </a>
+        </header>
+
+        <main class="container">
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <input type="text" id="search" class="form-control" placeholder="Buscar Pagos" />
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPagoModal">
+                    <i class="fas fa-plus"></i> Agregar Pago
+                </button>
+            </div>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Número Pago</th>
+                        <th>Método</th>
+                        <th>Cantidad</th>
+                        <th>Fecha</th>
+                        <th>Cédula Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($pagos as $index => $pago)
+                        <tr>
+                            <td>{{ $pagos->firstItem() + $index }}</td>
+                            <td>{{ $pago->id }}</td>
+                            <td>{{ $pago->numero_pago }}</td>
+                            <td>{{ $pago->metodo_pago }}</td>
+                            <td>{{ $pago->cantidad }}</td>
+                            <td>{{ $pago->fecha_pago }}</td>
+                            <td>{{ $pago->cedula_usuario }}</td>
+                            <td>
+                                <button type="button" class="btn btn-warning btn-sm edit-btn"
+                                    data-id="{{ $pago->id }}"
+                                    data-numero="{{ $pago->numero_pago }}"
+                                    data-metodo="{{ $pago->metodo_pago }}"
+                                    data-cantidad="{{ $pago->cantidad }}"
+                                    data-fecha="{{ $pago->fecha_pago }}"
+                                    data-cedula="{{ $pago->cedula_usuario }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editPagoModal">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+
+                                <form action="{{ route('pagos.destroy', $pago->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('¿Eliminar este pago?')" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center">No hay pagos registrados.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-center mt-4">
+                {{ $pagos->links() }}
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Agregar Pago -->
+    <div class="modal fade" id="addPagoModal" tabindex="-1" aria-labelledby="addPagoModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="addUserModalLabel">Agregar Pago</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form id="addUserForm">
-        <div class="mb-3">
-            <label for="addId" class="form-label">Id</label>
-            <input type="text" class="form-control" id="addId" required>
-        </div>
-        <div class="mb-3">
-            <label for="addNumeroPago" class="form-label">Número Pago</label>
-            <input type="text" class="form-control" id="addNumeroPago" required>
-        </div>
-            <div class="mb-3">
-            <label for="addMetodoPago" class="form-label">Método Pago</label>
-            <input type="text" class="form-control" id="addMetodoPago" required>
-        </div>
-        <div class="mb-3">
-            <label for="addCantidad" class="form-label">Cantidad</label>
-            <input type="text" class="form-control" id="addCantidad" required>
-        </div>
-        <div class="mb-3">
-            <label for="addFechaPago" class="form-label">Fecha Pago</label>
-            <input type="date" class="form-control" id="addFechaPago" required>
-        </div>
-        <div class="mb-3">
-            <label for="addCedulaUsuario" class="form-label">Cédula Usuario</label>
-            <input type="text" class="form-control" id="addCedulaUsuario" required>
-        </div>
-            <button type="submit" class="btn btn-success">Guardar</button>
+            <form action="{{ route('pagos.store') }}" method="POST" class="modal-content">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPagoModalLabel">Agregar Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="numero_pago" class="form-label">Número Pago</label>
+                        <input type="text" name="numero_pago" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="metodo_pago" class="form-label">Método de Pago</label>
+                        <input type="text" name="metodo_pago" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="cantidad" class="form-label">Cantidad</label>
+                        <input type="number" name="cantidad" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha_pago" class="form-label">Fecha de Pago</label>
+                        <input type="date" name="fecha_pago" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="cedula_usuario" class="form-label">Cédula Usuario</label>
+                        <input type="text" name="cedula_usuario" class="form-control" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
             </form>
-            </div>
-          </div>
-          </div>
         </div>
-        <!-- Modal Editar Pago -->
-        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    </div>
+
+    <!-- Modal Editar Pago -->
+    <div class="modal fade" id="editPagoModal" tabindex="-1" aria-labelledby="editPagoModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="editUserModalLabel">Editar Pago</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form id="editUserForm">
-        <div class="mb-3">
-            <label for="editId" class="form-label">Id</label>
-            <input type="text" class="form-control" id="editId" requerid>
-        </div>
-        <div class="mb-3">
-            <label for="editNumeroPago" class="form-label">Número Pago</label>
-            <input type="text" class="form-control" id="editNumeroPago" required>
-        </div>
-        <div class="mb-3">
-            <label for="editMetodoPago" class="form-label">Método Pago</label>
-            <input type="text" class="form-control" id="editMetodoPago" required>
-        </div>
-        <div class="mb-3">
-            <label for="editCantidad" class="form-label">Cantidad</label>
-            <input type="text" class="form-control" id="editCantidad" required>
-        </div>
-        <div class="mb-3">
-            <label for="editFechaPago" class="form-label">Fecha Pago</label>
-            <input type="date" class="form-control" id="editFechaPago" required>
-        </div>
-        <div class="mb-3">
-            <label for="editCedulaUsuario" class="form-label">Cédula Usuario</label>
-            <input type="text" class="form-control" id="editCedulaUsuario" required>
-        </div>
-            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <form method="POST" class="modal-content" id="editPagoForm">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="id" id="editId">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPagoModalLabel">Editar Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editNumeroPago" class="form-label">Número Pago</label>
+                        <input type="text" name="numero_pago" id="editNumeroPago" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editMetodoPago" class="form-label">Método de Pago</label>
+                        <input type="text" name="metodo_pago" id="editMetodoPago" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCantidad" class="form-label">Cantidad</label>
+                        <input type="number" name="cantidad" id="editCantidad" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editFechaPago" class="form-label">Fecha de Pago</label>
+                        <input type="date" name="fecha_pago" id="editFechaPago" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCedulaUsuario" class="form-label">Cédula Usuario</label>
+                        <input type="text" name="cedula_usuario" id="editCedulaUsuario" class="form-control" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </div>
             </form>
-              </div>
-            </div>
-            </div>
-          </div>
-      <!-- Modal Eliminar Pago -->
-      <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="deleteUserModalLabel">Confirmar Eliminación</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              ¿Estás seguro de que deseas eliminar este pago?
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-danger" id="confirmDeleteButton">Eliminar</button>
-            </div>
-          </div>
         </div>
-      </div>
-      <!-- Scripts -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-      <script src="./pagos.js"></script>
-      </body>
-      </html>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.dataset.id;
+                document.getElementById('editPagoForm').action = `/pagos/${id}`;
+                document.getElementById('editId').value = id;
+                document.getElementById('editNumeroPago').value = button.dataset.numero;
+                document.getElementById('editMetodoPago').value = button.dataset.metodo;
+                document.getElementById('editCantidad').value = button.dataset.cantidad;
+                document.getElementById('editFechaPago').value = button.dataset.fecha;
+                document.getElementById('editCedulaUsuario').value = button.dataset.cedula;
+            });
+        });
+    </script>
+</body>
+</html>
